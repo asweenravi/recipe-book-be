@@ -7,7 +7,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 routes(app);
-
-app.listen(5432, ()=>{
+// app.get('/',(req,res)=>{
+//     res.send('got response');
+// })
+app.listen(3000, ()=>{
     console.log("app is listening to 5432")
 });
