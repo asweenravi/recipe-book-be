@@ -18,4 +18,32 @@ router.get('/recipes', (req, res) => {
     })
 });
 
+router.post('/recipes', (req, res) => {
+    var query = `INSERT INTO recipes (data) values ('${JSON.stringify(req.body)}');`
+    db.query(query).then((results) => {
+        res.status(200).send({ message: 'sucess', data: results });
+    }).catch(err => {
+        res.status(500).send({ message: 'database error', error: err });
+    })
+ });
+
+router.put('/recipes', (req, res) => {
+    console.log(JSON.stringify(req.body));
+    var query = `UPDATE recipes SET data = '${JSON.stringify(req.body)}' WHERE data @> '{"id":  ${req.body.id}} ';`
+    db.query(query,req.body.id).then((results) => {
+        res.status(200).send({ message: 'sucess', data: results });
+    }).catch(err => {
+        res.status(500).send({ message: 'database error', error: err });
+    })
+});
+
+router.delete('/recipes', (req, res) => {
+    var query = `DELETE FROM recipes WHERE data @> '{"id":  ${req.body.id}}';`
+    db.query(query).then((results) => {
+        res.status(200).send({ message: 'sucess', data: results });
+    }).catch(err => {
+        res.status(500).send({ message: 'database error', error: err });
+    })
+ });
+
 module.exports = router;
